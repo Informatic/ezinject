@@ -1,11 +1,11 @@
 # 3.14 requirement: https://cmake.org/cmake/help/latest/policy/CMP0083.html
-cmake_minimum_required(VERSION 3.14)
+# cmake_minimum_required(VERSION 3.14)
 project(ezpatch C ASM)
 enable_language(CXX OPTIONAL)
 enable_testing()
 
-include(CheckPIESupported)
-check_pie_supported()
+#include(CheckPIESupported)
+#check_pie_supported()
 
 add_definitions(-fPIC)
 
@@ -456,7 +456,7 @@ function(add_ezinject_library target)
 		# force a dependency on the hook library
 		# even if user code doesn't use it
 		if(USING_GNU_LD)
-			target_link_options(${target} PUBLIC
+			target_link_libraries(${target} PUBLIC
 				-Wl,--whole-archive
 					$<TARGET_FILE:lh_hook>
 				-Wl,--no-whole-archive
@@ -550,7 +550,7 @@ if(EZ_TARGET_FREEBSD)
 endif()
 
 if(ENABLE_STATIC)
-	target_link_options(ezinject PUBLIC -static)
+	target_link_libraries(ezinject PUBLIC -static)
 endif()
 
 check_c_compiler_flag("-mno-stack-arg-probe" HAVE_CFLAG_STACK_ARG_PROBE)
