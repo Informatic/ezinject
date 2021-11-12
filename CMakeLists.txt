@@ -1,5 +1,5 @@
 # 3.14 requirement: https://cmake.org/cmake/help/latest/policy/CMP0083.html
-cmake_minimum_required(VERSION 3.14)
+# cmake_minimum_required(VERSION 3.14)
 project(ezpatch C ASM)
 enable_language(CXX OPTIONAL)
 enable_testing()
@@ -450,7 +450,7 @@ function(add_ezinject_library target)
 		# force a dependency on the hook library
 		# even if user code doesn't use it
 		if(USING_GNU_LD)
-			target_link_options(${target} PUBLIC
+			target_link_libraries(${target} PUBLIC
 				-Wl,--whole-archive
 					$<TARGET_FILE:lh_hook_linux>
 				-Wl,--no-whole-archive
@@ -464,7 +464,7 @@ function(add_ezinject_library target)
 	endif()
 
 	if(EZ_TARGET_ANDROID AND USE_ANDROID_ASHMEM)
-		target_link_options(${target} PUBLIC
+		target_link_libraries(${target} PUBLIC
 			-Wl,--whole-archive $<TARGET_FILE:ashmem> -Wl,--no-whole-archive
 		)
 	endif()
@@ -568,7 +568,7 @@ if(EZ_TARGET_FREEBSD)
 endif()
 
 if(ENABLE_STATIC)
-	target_link_options(ezinject PUBLIC -static)
+	target_link_libraries(ezinject PUBLIC -static)
 endif()
 
 include(CheckCCompilerFlag)
@@ -591,7 +591,7 @@ target_link_libraries(ezinject dl)
 if(EZ_TARGET_ANDROID AND USE_ANDROID_ASHMEM)
 	add_subdirectory(android-shmem)
 	add_dependencies(ezinject ashmem)
-	target_link_options(ezinject PUBLIC
+	target_link_libraries(ezinject PUBLIC
 		-Wl,--whole-archive $<TARGET_FILE:ashmem> -Wl,--no-whole-archive
 	)
 endif()

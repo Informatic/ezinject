@@ -7,7 +7,7 @@ endif()
 
 add_ezinject_library(dummy
 	${ARG_USE_LH}
-	#USE_LOG
+	USE_LOG
 	SOURCES libdummy.c
 )
 
